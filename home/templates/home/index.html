@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Guest Book</title>
+    <link rel="stylesheet" href="{% static 'home/style.css'%}">
+</head>
+
+<body>
+    <h1>Welcome to our guest book!</h1>
+    <h2>Guests</h2>
+    <p>These are the guests who have signed our guestbook:</p>
+
+    {% if guestlist|length > 0 %}
+    <ul>
+        {% for guest in guestlist %}
+        <li>{{guest.name}}  ({{ guest.timestamp.date|date:"c" }})</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Nobody has signed the guestbook yet! Be the first person!</p>
+    {% endif %}
+    <h3>Sign our Guestbook</h3>
+        <form action="/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+
+        <p>{{ hits }} people have visited this website since January 15th, 1998</p>
+</body>
+
+</html>
